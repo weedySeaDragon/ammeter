@@ -1,6 +1,6 @@
 require 'rails/generators'
 require 'active_support/core_ext'
-require 'rspec/rails'
+require 'rspec/xrails'
 require 'tmpdir'
 require 'fileutils'
 
