@@ -20,7 +20,6 @@ env:
 # whitelist
 branches:
   only:
-    - master
     - 1-1-2--wsd-must-req-all-rspec-rails
 
 bundler_args: "--retry=3 --jobs=3"
