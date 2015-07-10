@@ -6,6 +6,7 @@ require 'rdoc/task'
 require 'rspec/core'
 require 'rspec/core/rake_task'
 require 'cucumber/rake/task'
+
 require 'rubygems/version'
 
 task :cleanup_rcov_files do
@@ -21,8 +22,8 @@ Cucumber::Rake::Task.new(:cucumber)
 
 task :ensure_bundler_version do
   min_version_str = '1.9.5'
-  min_version = Gem::Version(min_version_str)
-  bundler_version = Gem::Version(Bundler::VERSION)
+  min_version = Gem::Version.new(min_version_str)
+  bundler_version = Gem::Version.new(Bundler::VERSION)
   sh "bundler --version"
   raise "Bundler #{min_version-str} is a development dependency to build ammeter. Please upgrade bundler." unless bundler_version >= min_version
 end
