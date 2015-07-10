@@ -6,6 +6,7 @@ require 'rdoc/task'
 require 'rspec/core'
 require 'rspec/core/rake_task'
 require 'cucumber/rake/task'
+require 'rubygems/version'
 
 task :cleanup_rcov_files do
   rm_rf 'coverage.data'
@@ -18,17 +19,20 @@ end
 
 Cucumber::Rake::Task.new(:cucumber)
 
-task :ensure_bundler_11 do
-  raise 'Bundler 1.1 is a development dependency to build ammeter. Please upgrade bundler.' unless Bundler::VERSION >= '1.1'
+task :ensure_bundler_version do
+  min_version_str = '1.9.5'
+  min_version = Gem::Version(min_version_str)
+  bundler_version = Gem::Version(Bundler::VERSION)
+  sh "bundler --version"
+  raise "Bundler #{min_version-str} is a development dependency to build ammeter. Please upgrade bundler." unless bundler_version >= min_version
 end
 
 task :ensure_bundler_no_coc_prompt do
-  raise 'Bundler 1.9.5 or greater is required. Please upgrade bundler.' unless Bundler::VERSION >= '1.9.5'
   sh "bundle config gem.coc false"
   sh "bundle config"
 end
 
-task :ensure_bundler_ok => [:ensure_bundler_11, :ensure_bundler_no_coc_prompt]
+task :ensure_bundler_ok => [:ensure_bundler_version, :ensure_bundler_no_coc_prompt]
 
 
 def create_gem(gem_name)
