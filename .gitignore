@@ -11,3 +11,6 @@ gemfiles/*.lock
 *~
 *.swp
 .rbx
+
+/.idea/*
+.gitignore
