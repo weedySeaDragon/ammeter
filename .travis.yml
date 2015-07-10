@@ -16,7 +16,6 @@ rvm:
 #  - jruby-1.7.9-d19
 
 env:
-  - BUNDLE_GEM__COC=false
   - RSPEC_VERSION=master
   - RSPEC_VERSION='~> 3.0.0'
   - RSPEC_VERSION='~> 2.99.0'
