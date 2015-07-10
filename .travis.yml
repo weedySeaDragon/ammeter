@@ -1,5 +1,7 @@
 language: ruby
 
+before_install: gem install bundler --version '>=1.9.5'  # use a version >= so we can use the --no-coc option
+
 rvm:
   - 2.2
   - 2.1.6
