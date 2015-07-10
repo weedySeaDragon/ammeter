@@ -18,8 +18,8 @@ rvm:
 env:
   - RSPEC_VERSION=master
   - RSPEC_VERSION='~> 3.0.0'
-  - RSPEC_VERSION='~> 2.99.0'
-  - RSPEC_VERSION='~> 2.14.0'
+#  - RSPEC_VERSION='~> 2.99.0'
+#  - RSPEC_VERSION='~> 2.14.0'
 
 # whitelist
 branches:
