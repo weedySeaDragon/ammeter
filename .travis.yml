@@ -17,6 +17,12 @@ env:
   - RSPEC_VERSION='~> 2.99.0'
   - RSPEC_VERSION='~> 2.14.0'
 
+# whitelist
+branches:
+  only:
+    - master
+    - 1-1-2--wsd-must-req-all-rspec-rails
+
 bundler_args: "--retry=3 --jobs=3"
 
 script: "bundle exec rake ci --trace"
