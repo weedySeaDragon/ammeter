@@ -22,6 +22,14 @@ task :ensure_bundler_11 do
   raise 'Bundler 1.1 is a development dependency to build ammeter. Please upgrade bundler.' unless Bundler::VERSION >= '1.1'
 end
 
+task :ensure_bundler_no_coc_prompt do
+  raise 'Bundler 1.9.5 or greater is required. Please upgrade bundler.' unless Bundler::VERSION >= '1.9.5'
+  sh "bundle config gem.coc false"
+  sh "bundle config"
+end
+
+task :ensure_bundler_ok => [:ensure_bundler_11, :ensure_bundler_no_coc_prompt]
+
 
 def create_gem(gem_name)
   template_folder = "features/templates/#{gem_name}"
@@ -41,7 +49,7 @@ end
 
 namespace :generate do
   desc "generate a fresh app with rspec installed"
-  task :app => :ensure_bundler_11 do |t|
+  task :app => :ensure_bundler_ok  do |t|
     sh "bundle exec rails new ./tmp/example_app -m 'features/templates/generate_example_app.rb' --skip-test-unit"
     sh "cp 'features/templates/rspec.rake' ./tmp/example_app/lib/tasks"
     Dir.chdir("./tmp/example_app/") do
@@ -52,12 +60,12 @@ namespace :generate do
   end
 
   desc "generate a fresh gem that depends on railties"
-  task :railties_gem => :ensure_bundler_11 do |t|
+  task :railties_gem => :ensure_bundler_ok do |t|
     create_gem('my_railties_gem')
   end
 
   desc "generate a fresh gem that depends on rails"
-  task :rails_gem => :ensure_bundler_11 do |t|
+  task :rails_gem => :ensure_bundler_ok do |t|
     create_gem('my_rails_gem')
   end
 end
