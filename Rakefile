@@ -30,6 +30,7 @@ end
 
 task :ensure_bundler_no_coc_prompt do
   sh "bundle config gem.coc false"
+  sh "bundle config gem.mit false"
   sh "bundle config"
 end
 
