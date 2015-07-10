@@ -27,7 +27,7 @@ def create_gem(gem_name)
   template_folder = "features/templates/#{gem_name}"
 
   Dir.chdir("./tmp") do
-    sh "bundle gem #{gem_name}"
+    sh "bundle gem #{gem_name} --no-coc"  # do not generate a code of conduct file. required so bundler does not issue an interactive prompt for this option
   end
   sh "cp '#{template_folder}/Gemfile' tmp/#{gem_name}"
   sh "cp '#{template_folder}/#{gem_name}.gemspec' tmp/#{gem_name}"
