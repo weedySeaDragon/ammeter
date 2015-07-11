@@ -1,5 +1,5 @@
 require 'bundler/setup'
-require 'rails'
+require 'rails/all'
 require 'ammeter/init'
 
 Bundler.require
