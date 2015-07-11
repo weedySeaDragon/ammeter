@@ -16,9 +16,6 @@
 # users commonly want.
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
-
-Dir[File.join(".","spec","support","**","*.rb")].each { |f| require f }
-
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
@@ -41,7 +38,7 @@ RSpec.configure do |config|
     # a real object. This is generally recommended, and will default to
     # `true` in RSpec 4.
     mocks.verify_partial_doubles = true
-end
+  end
 
 # The settings below are suggested to provide a good initial experience
 # with RSpec, but feel free to customize to your heart's content.
@@ -96,27 +93,4 @@ end
   # as the one that triggered the failure.
   Kernel.srand config.seed
 =end
-end
-
-
-require 'ammeter/init'
-
-Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
-
-RSpec.configure do |c|
-  c.include MatchesForRSpecRailsSpecs
-  if RSpec::Core::Version::STRING < '3'
-    c.include RSpec2MemoizedHelpersCompatibility
-  end
-end
-
-def stub_file(filename, content)
-  allow(File).to receive(:read).with(filename).and_return(content)
-end
-
-
-module TestApp
-  class Application < Rails::Application
-    config.root = File.dirname(__FILE__)
-  end
 end
