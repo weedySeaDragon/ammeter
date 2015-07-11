@@ -1,0 +1,95 @@
+#!/usr/bin/env rake
+# Add your own tasks in files placed in lib/tasks ending in .rake,
+# for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
+
+require File.expand_path('../config/application', __FILE__)
+
+require 'bundler'
+require 'bundler/setup'
+
+
+require 'rdoc/task'
+require 'rspec/core'
+require 'rspec/core/rake_task'
+require 'cucumber/rake/task'
+
+require 'rubygems/version'
+
+require 'fileutils'
+
+ExampleApp::Application.load_tasks
+
+
+task :cleanup_rcov_files do
+  rm_rf 'coverage.data'
+end
+
+desc "Run all examples"
+RSpec::Core::RakeTask.new(:spec) do |t|
+  t.rspec_opts = %w[--color]
+end
+
+Cucumber::Rake::Task.new(:cucumber)
+
+
+
+task :ensure_bundler_version do
+  min_version_str = '1.9.5'
+  min_version = Gem::Version.new(min_version_str)
+  bundler_version = Gem::Version.new(Bundler::VERSION)
+  sh "bundler --version"
+  raise "Bundler #{min_version-str} is a development dependency to build ammeter. Please upgrade bundler." unless bundler_version >= min_version
+end
+
+task :ensure_bundler_no_coc_prompt do
+  sh "bundle config gem.coc false"
+  sh "bundle config gem.mit false"
+  sh "bundle config gem.test rspec"
+  sh "bundle config"
+end
+
+task :ensure_bundler_ok => [:ensure_bundler_version, :ensure_bundler_no_coc_prompt]
+
+
+namespace :generate do
+  desc "generate a fresh app with rspec installed"
+  task :app => :ensure_bundler_ok  do |t|
+ #   sh "bundle exec rails new ./tmp/example_app -m 'features/templates/generate_example_app.rb' --skip-test-unit"
+ #   sh "cp 'features/templates/rspec.rake' ./tmp/example_app/lib/tasks"
+ #   Dir.chdir("./tmp/example_app/") do
+      Bundler.clean_system 'bundle install'
+      Bundler.clean_system 'rake db:migrate'
+ #     Bundler.clean_system 'rails g rspec:install'
+    #  append stuff to spec_helper.rb
+    # append stuff to rails_helper.rb
+ #  end
+  end
+
+  task :railties_gem do
+    # nothing
+  end
+
+  task :rails_gem do
+    # nothing
+  end
+end
+
+
+task :generate => [:'generate:app', :'generate:railties_gem',  :'generate:rails_gem']
+
+namespace :clobber do
+  desc "clobber the generated app"
+  task :app do
+#    rm_rf "tmp/example_app"
+  end
+  task :gem do
+#    rm_rf "tmp/my_railties_gem"
+#    rm_rf "tmp/my_rails_gem"
+  end
+end
+task :clobber => [:'clobber:app', :'clobber:gem']
+
+task :ci => [:spec, :clobber, :generate, :cucumber]
+task :default => :ci
+
+
