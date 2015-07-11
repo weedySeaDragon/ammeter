@@ -66,6 +66,37 @@ namespace :generate do
       Bundler.clean_system 'bundle install'
       Bundler.clean_system 'rake db:migrate'
       Bundler.clean_system 'rails g rspec:install'
+      # TODO append stuff to spec_helper.rb
+=begin
+
+require 'ammeter/init'
+
+Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
+
+RSpec.configure do |c|
+  c.include MatchesForRSpecRailsSpecs
+  if RSpec::Core::Version::STRING < '3'
+    c.include RSpec2MemoizedHelpersCompatibility
+  end
+end
+
+def stub_file(filename, content)
+  allow(File).to receive(:read).with(filename).and_return(content)
+end
+
+
+module TestApp
+  class Application < Rails::Application
+    config.root = File.dirname(__FILE__)
+  end
+end
+
+=end
+
+      # TODO append to rails_helper.rb:    ActiveRecord::Base.establish_connection :adapter => "sqlite3", :database => ":memory:"
+
+      # note that rspec 2.x does not create rails_helper.rb
+      #  may need to change env.rb symlink created from spec_helper to rails_helper (...so we create a symlink to avoid cluttering tests)
     end
   end
 
