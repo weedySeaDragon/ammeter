@@ -60,7 +60,7 @@ Feature: Gems can contain generators
       """
     And a file named "spec/generators/resourceful_generator_spec.rb" with:
       """
-      require "spec_helper"
+      require "rails_helper"
       require 'generators/resourceful/resourceful_generator'
 
       describe ResourcefulGenerator do
