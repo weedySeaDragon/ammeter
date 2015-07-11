@@ -1,4 +1,4 @@
-require "rails_helper"
+require 'rails_helper'
 require 'generators/resourceful/resourceful_generator'
 
 describe ResourcefulGenerator do
