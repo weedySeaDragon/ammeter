@@ -16,9 +16,11 @@ rvm:
 #  - jruby-1.7.9-d19
 
 env:
-  - RSPEC_VERSION='~> 3.1.0'
+# - RSPEC_VERSION='~> 3.3.0'
+#  - RSPEC_VERSION='~> 3.2.0'
+#  - RSPEC_VERSION='~> 3.1.0'
 #  - RSPEC_VERSION=master
-#  - RSPEC_VERSION='~> 2.99.0'
+  - RSPEC_VERSION='~> 2.99.0'
 #  - RSPEC_VERSION='~> 2.14.0'
 
 # whitelist
