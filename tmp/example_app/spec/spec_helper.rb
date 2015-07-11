@@ -115,8 +115,6 @@ def stub_file(filename, content)
 end
 
 
-ActiveRecord::Base.establish_connection :adapter => "sqlite3", :database => ":memory:"
-
 module TestApp
   class Application < Rails::Application
     config.root = File.dirname(__FILE__)
