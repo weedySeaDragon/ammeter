@@ -1,5 +1,15 @@
-require 'rspec/core'
+require 'rails/generators'
+require 'active_support/core_ext'
+require 'action_view'
+require 'action_view/template'
+require 'action_pack'
+require 'action_controller'
+
+require 'rspec/rails'
+require 'rspec/rails/example'
+
 require 'ammeter/rspec/generator/example/generator_example_group'
+
 
 RSpec::configure do |c|
   def c.escaped_path(*parts)
