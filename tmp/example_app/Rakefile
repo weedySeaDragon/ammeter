@@ -61,6 +61,7 @@ namespace :generate do
       Bundler.clean_system 'rake db:migrate'
  #     Bundler.clean_system 'rails g rspec:install'
     #  append stuff to spec_helper.rb
+    # append stuff to rails_helper.rb
  #  end
   end
 
