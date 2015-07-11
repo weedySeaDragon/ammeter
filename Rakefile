@@ -9,6 +9,8 @@ require 'cucumber/rake/task'
 
 require 'rubygems/version'
 
+require 'fileutils'
+
 task :cleanup_rcov_files do
   rm_rf 'coverage.data'
 end
@@ -47,7 +49,8 @@ def create_gem(gem_name)
   sh "cp '#{template_folder}/Gemfile' tmp/#{gem_name}"
   sh "cp '#{template_folder}/#{gem_name}.gemspec' tmp/#{gem_name}"
   sh "cp '#{template_folder}/Rakefile' tmp/#{gem_name}"
-  sh "mkdir -p tmp/#{gem_name}/spec"
+  #sh "mkdir -p tmp/#{gem_name}/spec"  # IS NOT PORTABLE: FAILS under WINDOWS. Use File.mkdir_p
+  FileUtils.mkdir_p "tmp/#{gem_name}/spec"
   sh "cp '#{template_folder}/spec/spec_helper.rb' tmp/#{gem_name}/spec"
   Dir.chdir("./tmp/#{gem_name}") do
     Bundler.clean_system 'bundle install'
