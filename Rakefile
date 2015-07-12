@@ -11,6 +11,8 @@ require 'rubygems/version'
 
 require 'fileutils'
 
+
+
 task :cleanup_rcov_files do
   rm_rf 'coverage.data'
 end
@@ -26,7 +28,7 @@ task :ensure_bundler_version do
   min_version_str = '1.9.5'
   min_version = Gem::Version.new(min_version_str)
   bundler_version = Gem::Version.new(Bundler::VERSION)
-  sh "bundler --version"
+
   raise "Bundler #{min_version-str} is a development dependency to build ammeter. Please upgrade bundler." unless bundler_version >= min_version
 end
 
@@ -34,7 +36,6 @@ task :ensure_bundler_no_coc_prompt do
   sh "bundle config gem.coc false"
   sh "bundle config gem.mit false"
   sh "bundle config gem.test rspec"
-  sh "bundle config"
 end
 
 task :ensure_bundler_ok => [:ensure_bundler_version, :ensure_bundler_no_coc_prompt]
@@ -44,7 +45,7 @@ def create_gem(gem_name)
   template_folder = "features/templates/#{gem_name}"
 
   Dir.chdir("./tmp") do
-    sh "bundle gem #{gem_name} --no-coc"  # do not generate a code of conduct file. required so bundler does not issue an interactive prompt for this option
+    sh "bundle gem #{gem_name} --no-coc" # do not generate a code of conduct file. required so bundler does not issue an interactive prompt for this option
   end
   sh "cp '#{template_folder}/Gemfile' tmp/#{gem_name}"
   sh "cp '#{template_folder}/#{gem_name}.gemspec' tmp/#{gem_name}"
@@ -57,47 +58,59 @@ def create_gem(gem_name)
   end
 end
 
+
+# copy spec/support files to example_app/spec/support
+def cp_spec_support
+  sh "cp -r #{File.join('.','spec','support')} #{File.join('.','tmp','example_app','spec','support')}"
+end
+
+
 namespace :generate do
+
   desc "generate a fresh app with rspec installed"
-  task :app => :ensure_bundler_ok  do |t|
+  task :app => :ensure_bundler_ok do |t|
     sh "bundle exec rails new ./tmp/example_app -m 'features/templates/generate_example_app.rb' --skip-test-unit"
     sh "cp 'features/templates/rspec.rake' ./tmp/example_app/lib/tasks"
+
     Dir.chdir("./tmp/example_app/") do
       Bundler.clean_system 'bundle install'
       Bundler.clean_system 'rake db:migrate'
       Bundler.clean_system 'rails g rspec:install'
-      # TODO append stuff to spec_helper.rb
-=begin
+
+      ammeter_help = <<-'EOS'
+
+# The following is added for testing ammeter
 
 require 'ammeter/init'
 
 Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
-RSpec.configure do |c|
-  c.include MatchesForRSpecRailsSpecs
-  if RSpec::Core::Version::STRING < '3'
-    c.include RSpec2MemoizedHelpersCompatibility
-  end
-end
-
-def stub_file(filename, content)
-  allow(File).to receive(:read).with(filename).and_return(content)
-end
-
-
-module TestApp
-  class Application < Rails::Application
-    config.root = File.dirname(__FILE__)
-  end
-end
-
-=end
-
-      # TODO append to rails_helper.rb:    ActiveRecord::Base.establish_connection :adapter => "sqlite3", :database => ":memory:"
-
-      # note that rspec 2.x does not create rails_helper.rb
-      #  may need to change env.rb symlink created from spec_helper to rails_helper (...so we create a symlink to avoid cluttering tests)
+  RSpec.configure do |c|
+    c.include MatchesForRSpecRailsSpecs
+    if RSpec::Core::Version::STRING < '3'
+      c.include RSpec2MemoizedHelpersCompatibility
     end
+  end
+
+  def stub_file(filename, content)
+    allow(File).to receive(:read).with(filename).and_return(content)
+  end
+
+  module TestApp
+    class Application < Rails::Application
+      config.root = File.dirname(__FILE__)
+    end
+  end
+      EOS
+
+      File.open("spec/spec_helper.rb", 'a') {|f| f.write ammeter_help}
+
+      File.open("spec/rails_helper.rb", 'a') {|f| f.write ' ActiveRecord::Base.establish_connection :adapter => "sqlite3", :database => ":memory:"'}
+
+    end  # Dir.chdir
+
+    cp_spec_support
+
   end
 
   desc "generate a fresh gem that depends on railties"
@@ -111,7 +124,7 @@ end
   end
 end
 
-task :generate => [:'generate:app', :'generate:railties_gem',  :'generate:rails_gem']
+task :generate => [:'generate:app', :'generate:railties_gem', :'generate:rails_gem']
 
 namespace :clobber do
   desc "clobber the generated app"
