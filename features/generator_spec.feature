@@ -95,6 +95,7 @@ Feature: generator spec
     When I run `rake spec`
     Then the output should contain "4 examples, 0 failures"
 
+
   Scenario: A spec with some failures shows nice error messages
     Given a file named "spec/generators/awesome_generator_spec.rb" with:
       """
@@ -142,6 +143,7 @@ Feature: generator spec
        db/migrate/TIMESTAMP_non_existent_migration.rb" to exist
        """
 
+
    Scenario: Can specify arguments separately from running the generator
      Given a file named "spec/generators/awesome_generator_spec.rb" with:
        """
@@ -165,6 +167,7 @@ Feature: generator spec
      When I run `rake spec`
      Then the output should contain "2 examples, 0 failures"
 
+
   Scenario: A generator that creates a migration
     Given a file named "spec/generators/a_migration_spec.rb" with:
       """
@@ -181,6 +184,7 @@ Feature: generator spec
       """
     When I run `rake spec`
     Then the output should contain "3 examples, 0 failures"
+
 
   Scenario: Can tell the generator where to put its files
     Given a file named "spec/generators/awesome_generator_spec.rb" with:

@@ -24,6 +24,7 @@ Feature: generator spec
       end
       """
 
+
   Scenario: A spec that runs the entire generator
     Given a file named "spec/generators/resourceful_generator_spec.rb" with:
       """
