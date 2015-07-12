@@ -3,10 +3,12 @@ Feature: Gems can contain generators
   Within a Gem Rails may often not be loaded (but railties is)
   We should still be able to write a spec for these generators
 
+  @announce
   @railties_gem
   Scenario: A generator with "railties" dependency
     Given a file named "lib/generators/awesome/awesome_generator.rb" with:
       """
+      require 'rails/all'
       class AwesomeGenerator < Rails::Generators::NamedBase
         source_root File.expand_path('../templates', __FILE__)
         class_option :super, :type => :boolean, :default => false
@@ -38,10 +40,12 @@ Feature: Gems can contain generators
     When I run `rake spec`
     Then the output should contain "3 examples, 0 failures"
 
+  @announce
   @rails_gem
   Scenario: A generator that uses "hook_for"
     Given a file named "lib/generators/resourceful/resourceful_generator.rb" with:
       """
+      require 'rails/generators'
       class ResourcefulGenerator < Rails::Generators::NamedBase
         source_root File.expand_path('../templates', __FILE__)
         class_option :super, :type => :boolean, :default => false
@@ -60,7 +64,7 @@ Feature: Gems can contain generators
       """
     And a file named "spec/generators/resourceful_generator_spec.rb" with:
       """
-      require "rails_helper"
+      require 'spec_helper'
       require 'generators/resourceful/resourceful_generator'
 
       describe ResourcefulGenerator do
