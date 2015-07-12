@@ -16,7 +16,13 @@ end
 
 gem "i18n", '< 0.7.0' if RUBY_VERSION < '1.9.3'
 gem 'ammeter', :path=>'../..'
+
+
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+
 if defined?(Rails) && Rails::VERSION::STRING.to_f < 4
   # Execjs is causing problems on 1.8.7
   gem 'execjs', '~> 2.0.0'
 end
+
