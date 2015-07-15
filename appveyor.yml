@@ -2,106 +2,33 @@ version: 1.1.3pre-'{build}'
 
 branches:
   only:
-  - wsd--example-app-working
+  - appveyor-testing
 
 environment:
   matrix:
-    - ruby_version: "193"
-      rspec_version:  "~> 3.3.0"
-    - ruby_version: "193"
-      rspec_version:  "~> 3.2.0"
-    - ruby_version: "193"
-      rspec_version:  "~> 3.1.0"
-    - ruby_version: "193"
-      rspec_version:  "~> 3.0.0"
-    - ruby_version: "193"
-      rspec_version:  "~> 2.9.9"
-
-
-    - ruby_version: "200"
-      rspec_version:  "~> 3.3.0"
-    - ruby_version: "200"
-      rspec_version:  "~> 3.2.0"
-    - ruby_version: "200"
-      rspec_version:  "~> 3.1.0"
-    - ruby_version: "200"
-      rspec_version:  "~> 3.0.0"
-    - ruby_version: "200"
-      rspec_version:  "~> 2.99.0"
-
-
     - ruby_version: "200-x64"
-      rspec_version:  "~> 3.3.0"
+      RSPECVERSION:  "~> 3.3.0"
     - ruby_version: "200-x64"
-      rspec_version:  "~> 3.2.0"
-    - ruby_version: "200-x64"
-      rspec_version:  "~> 3.1.0"
-    - ruby_version: "200-x64"
-      rspec_version:  "~> 3.0.0"
-    - ruby_version: "200-x64"
-      rspec_version:  "~> 2.99.0"
-
-
-    - ruby_version: "21"
-      rspec_version:  "~> 3.3.0"
-    - ruby_version: "21"
-      rspec_version:  "~> 3.2.0"
-    - ruby_version: "21"
-      rspec_version:  "~> 3.1.0"
-    - ruby_version: "21"
-      rspec_version:  "~> 3.0.0"
-    - ruby_version: "21"
-      rspec_version:  "~> 2.99.0"
-
+      RSPECVERSION:  "~> 3.2.0"
 
     - ruby_version: "21-x64"
-      rspec_version:  "~> 3.3.0"
-    - ruby_version: "21-x64"
-      rspec_version:  "~> 3.2.0"
-    - ruby_version: "21-x64"
-      rspec_version:  "~> 3.1.0"
-    - ruby_version: "21-x64"
-      rspec_version:  "~> 3.0.0"
-    - ruby_version: "21-x64"
-      rspec_version:  "~> 2.99.0"
-
-
-    - ruby_version: "22"
-      rspec_version:  "~> 3.3.0"
-    - ruby_version: "22"
-      rspec_version:  "~> 3.2.0"
-    - ruby_version: "22"
-      rspec_version:  "~> 3.1.0"
-    - ruby_version: "22"
-      rspec_version:  "~> 3.0.0"
-    - ruby_version: "22"
-      rspec_version:  "~> 2.99.0"
-
-
-    - ruby_version: "22-x64"
-      rspec_version:  "~> 3.3.0"
-    - ruby_version: "22-x64"
-      rspec_version:  "~> 3.2.0"
-    - ruby_version: "22-x64"
-      rspec_version:  "~> 3.1.0"
-    - ruby_version: "22-x64"
-      rspec_version:  "~> 3.0.0"
-    - ruby_version: "22-x64"
-      rspec_version:  "~> 2.99.0"
+      RSPECVERSION:  "~> 3.0.0"
 
 
 matrix:
   allow_failures:
-    - rspec_version: '~> 2.99.0'
+    - RSPECVERSION: '~> 2.99.0'
 
 
 install:
   - echo *********************
   - echo Starting install...
-  - echo RSPEC version is %rspec_version%.
+  - echo RSPECVERSION is %RSPECVERSION%.
   - echo Ruby version is %ruby_version%.
-  - SET RSPEC_VERSION=%rspec_version%
+  - SET RSPEC_VERSION=%RSPECVERSION%
   - SET PATH=C:\Ruby%ruby_version%\bin;C:\Ruby%ruby_version%\DevKit;C:\%PATH%
+  - SET RSPEC_VERSION
+  - SET PATH
   - gem install bundler --version "~> 1.9.5" --no-rdoc --no-ri # cannot cache because ruby version changes
   - bundle install
   - gem --version
