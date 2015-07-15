@@ -18,6 +18,7 @@ group :development, :test do
   end
 
   gem 'aruba', '~> 0.7.4'
+  #gem 'aruba', :git => 'git://github.com/cucumber/aruba.git'
 end
 
 if rspec_major_version == '2' || RUBY_VERSION.to_f < 1.9
