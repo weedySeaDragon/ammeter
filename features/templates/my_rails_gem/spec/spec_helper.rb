@@ -1,5 +1,6 @@
 require 'bundler/setup'
 require 'rails/all'
+
 begin
   # This prevents 'uninitialized constant Jquery::Rails::Railtie::PROTOTYPE_JS (NameError)'
   require 'jquery/rails'
@@ -17,3 +18,5 @@ end
 require 'ammeter/init'
 
 Bundler.require
+
+ActiveRecord::Base.establish_connection :adapter => "sqlite3", :database => ":memory:"
