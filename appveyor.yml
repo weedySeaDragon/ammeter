@@ -96,7 +96,7 @@ matrix:
 
 
 before_install:
-  - echo ---------------------------------
+  - echo *********************
   - echo Starting install...
   - echo RSPEC version is %rspec_version%.
   - echo Ruby version is %ruby_version%.
