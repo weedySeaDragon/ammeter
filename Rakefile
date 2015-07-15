@@ -283,25 +283,6 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
     end # Dir.chdir
 
     cp_spec_support
-
-    puts TASK_SEPARATOR
-    puts " current files: (calling show_dir(Dir.getwd)) \n"
-    show_dir(Dir.getwd)
-
-  end
-
-  # a temp method so we can see directory contents when running travis, etc.
-  require 'find'
-  def show_dir(root_dir)
-    Find.find(root_dir) do   |path|
-      if path =~ /\.git.*/
-        puts "  PRUNED #{path}"
-        Find.prune
-      end
-      puts path
-    end
-    puts TASK_SEPARATOR
-    puts "\n"
   end
 
 
