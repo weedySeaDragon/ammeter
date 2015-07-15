@@ -7,7 +7,6 @@ before_install:
 rvm:
   - 2.2
   - 2.1.6
-  - 2.1.2
   - 2.0.0
   - 1.9.3
   - jruby-18mode # JRuby in 1.8 mode
@@ -17,7 +16,7 @@ rvm:
 #  - ruby-head
 
 env:
- - RSPEC_VERSION='~> 3.3.0'
+  - RSPEC_VERSION='~> 3.3.0'
   - RSPEC_VERSION='~> 3.2.0'
   - RSPEC_VERSION='~> 3.1.0'
   - RSPEC_VERSION='~> 3.0.0'
@@ -40,6 +39,7 @@ matrix:
   allow_failures:
     - rvm: 2.2
     - rvm: ruby-head
-    - rvm: jruby-9.0.0.0.pre1
-    - rvm: jruby-1.7.9-d19
+    - rvm: jruby-18mode
+    - rvm: jruby-19mode
+
 
