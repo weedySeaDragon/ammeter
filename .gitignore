@@ -12,3 +12,4 @@ gemfiles/*.lock
 .rbx
 
 /.idea/*
+tmp/*
