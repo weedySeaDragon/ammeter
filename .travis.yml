@@ -6,6 +6,7 @@ before_install:
   - gem --version
   - ruby --version
 
+
 rvm:
   - 2.2
   - 2.1.6
@@ -36,9 +37,9 @@ bundler_args: "--retry=3 --jobs=3"
 script: "bundle exec rake ci --trace"
 
 matrix:
-  include:
-    - rvm: rbx-2.2.9
-      env: RBX_RUBY_COMPAT=2.1.0 RBX_VERSION=2.2.9
+#  include:
+#    - rvm: rbx-2.2.9
+#      env: RBX_RUBY_COMPAT=2.1.0 RBX_VERSION=2.2.9
   allow_failures:
     - RSPEC_VERSION='~> 2.99.0'
     - rvm: ruby-head
