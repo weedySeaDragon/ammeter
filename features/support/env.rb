@@ -16,7 +16,7 @@ change made to aruba
 =end
 
 Before do
-  if RUBY_VERSION == "1.9.3" || Gem.win_platform?   # TODO Gem.win_platform? depends on rubygems (MRI >=1.9)
+  if RUBY_VERSION == "1.9.3" || Gem.win_platform? # TODO Gem.win_platform? depends on rubygems (MRI >=1.9)
     @aruba_timeout_seconds = 60
   else
     @aruba_timeout_seconds = 30
@@ -24,7 +24,7 @@ Before do
 end
 
 def aruba_path(file_or_dir, source_foldername)
-  File.expand_path("../../../#{file_or_dir.sub(source_foldername,'aruba')}", __FILE__)
+  File.expand_path("../../../#{file_or_dir.sub(source_foldername, 'aruba')}", __FILE__)
 end
 
 def example_app_path(file_or_dir)
@@ -45,9 +45,9 @@ def write_symlink(file_or_dir, source_foldername, filename=nil)
   source = example_app_path(file_or_dir)
   target = aruba_path(file_or_dir, source_foldername)
   target = File.join(File.dirname(target), filename) if filename
-  system "ln -s #{source} #{target}"  # symbolic links are not platform safe. (not implemented on all platforms)
-  #FileUtils.cp_r(source, target)
+  system "ln -s -f #{source} #{target}" # FIXME system ability to create symbolic links is not platform safe. (not implemented on all platforms)
 end
+
 
 def copy_to_aruba_from(gem_or_app_name)
   steps %Q{
@@ -57,17 +57,19 @@ def copy_to_aruba_from(gem_or_app_name)
   rspec_version = ENV['RSPEC_VERSION']
   rspec_major_version = (rspec_version && rspec_version != 'master') ? rspec_version.scan(/\d+/).first : '3'
 
-  Dir["tmp/#{gem_or_app_name}/*"].each do |file_or_dir|
+ # Dir["tmp/#{gem_or_app_name}/*"].each do |file_or_dir|
+  Dir["tmp/#{gem_or_app_name}/**/*"].each do |file_or_dir|
     if !(file_or_dir =~ /\/spec$/)
       write_symlink(file_or_dir, gem_or_app_name)
     end
   end
 
   write_symlink("tmp/#{gem_or_app_name}/spec/spec_helper.rb", gem_or_app_name)
+  Dir["tmp/#{gem_or_app_name}/spec/**/support/*"].each { |file_or_dir| write_symlink(file_or_dir, gem_or_app_name) }
 
   if rspec_major_version == '2'
     # rspec 2.x does not create rails_helper.rb so we create a symlink to avoid cluttering tests
-    write_symlink("tmp/#{gem_or_app_name}/spec/spec_helper.rb", gem_or_app_name, 'rails_helper.rb')
+    write_symlink("tmp/#{gem_or_app_name}/spec/spec_helper.rb", gem_or_app_name, 'rails_helper.rb') # TODO will we have the ActiveRecord connection?
   elsif rspec_major_version == '3' && File.exist?("tmp/#{gem_or_app_name}/spec/rails_helper.rb")
     write_symlink("tmp/#{gem_or_app_name}/spec/rails_helper.rb", gem_or_app_name)
   end
