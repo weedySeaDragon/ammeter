@@ -1,28 +1,42 @@
 # for Appveyor.com : continuous build and deployment server for Azure (Windows)
 version: '{build}'
+
 branches:
   only:
   - wsd--example-app-working
 
+platform:
+  - x86
+  - x64
+
 environment:
+# - RSPEC_VERSION=master
+  - RSPEC_VERSION='~> 3.3.0'
+  - RSPEC_VERSION='~> 3.2.0'
+  - RSPEC_VERSION='~> 3.1.0'
+  - RSPEC_VERSION='~> 3.0.0'
+  - RSPEC_VERSION='~> 2.99.0'
+#  - RSPEC_VERSION='~> 2.14.0'
+
   matrix:
-#    - ruby_version: '20'
-#    - ruby_version: '193'
+    - ruby_version: '20'
+    - ruby_version: '193'
     - ruby_version: '21'
+
+matrix:
+  allow_failures:
+    - RSPEC_VERSION='~> 2.99.0'
+
 
 install:
   - SET PATH=C:\Ruby%ruby_version%\bin;%PATH%
-  - ruby --version
-  - gem --version
   - gem install bundler --version '>=1.9.5'  #  so we can be sure to set code of conduct option= false to avoid an interactive prompt
-  - bundler --version
   - bundle install
+  - gem --version
+  - bundler --version
+  - ruby --version
 
 build: off
-# could be (for building a gem):
-#- rake build
-#- gem install --no-ri --no-rdoc pkg/<gem-name>-*.gem
 
 test_script:
-  - bundle exec rake spec --backtrace
-# could be - bundle exec cucumber
+  -  bundle exec rake ci --trace
