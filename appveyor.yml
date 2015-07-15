@@ -5,24 +5,21 @@ branches:
   only:
   - wsd--example-app-working
 
-platform:
-  - x86
-  - x64
-
 environment:
-# - RSPEC_VERSION=master
   - RSPEC_VERSION='~> 3.3.0'
   - RSPEC_VERSION='~> 3.2.0'
   - RSPEC_VERSION='~> 3.1.0'
   - RSPEC_VERSION='~> 3.0.0'
   - RSPEC_VERSION='~> 2.99.0'
-#  - RSPEC_VERSION='~> 2.14.0'
-
   matrix:
-    - ruby_version: '193'
-    - ruby_version: '20'
-    - ruby_version: '21'
-    - ruby_version: '22'
+    - ruby_version: "193"
+    - ruby_version: "200"
+    - ruby_version: "200-x64"
+    - ruby_version: "21"
+    - ruby_version: "21-x64"
+    - ruby_version: "22"
+    - ruby_version: "22-x64"
+
 
 matrix:
   allow_failures:
@@ -30,8 +27,8 @@ matrix:
 
 
 install:
-  - SET PATH=C:\Ruby%ruby_version%\bin;%PATH%
-  - gem install bundler --version '>=1.9.5'  #  so we can be sure to set code of conduct option= false to avoid an interactive prompt
+  - SET PATH=C:\Ruby%ruby_version%\bin;C:\Ruby%ruby_version%\DevKit;C:\%PATH%
+  - gem install bundler --version '>=1.9.5' --no-ri --no-rdoc #  so we can be sure to set code of conduct option= false to avoid an interactive prompt
   - bundle install
   - gem --version
   - bundler --version
