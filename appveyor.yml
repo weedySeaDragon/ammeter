@@ -5,9 +5,9 @@ branches:
   - wsd--example-app-working
 
 install:
-  - SET RSPEC_VERSION=%RSPEC_VERSION%
+  - SET RSPEC_VERSION=$(rspec_version)
   - SET PATH=C:\Ruby%ruby_version%\bin;C:\Ruby%ruby_version%\DevKit;C:\%PATH%
-  - gem install bundler --version '>=1.9.5' --no-ri --no-rdoc
+  - gem install bundler --version '>=1.9.5'
   - bundle install
   - gem --version
   - bundler --version
@@ -15,16 +15,20 @@ install:
 
 build: off
 
+before_test:
+  - ps: $env:rspec_version
+
 test_script:
-  -  bundle exec rake ci --trace
+  - bundle exec rake ci --trace
 
 
 environment:
-  - RSPEC_VERSION: "~> 3.3.0"
-  - RSPEC_VERSION: "~> 3.2.0"
-  - RSPEC_VERSION: "~> 3.1.0"
-  - RSPEC_VERSION: "~> 3.0.0"
-  - RSPEC_VERSION: "~> 2.99.0"
+  rspec_version: "~> 3.3.0"
+  rspec_version: "~> 3.2.0"
+  rspec_version: "~> 3.1.0"
+  rspec_version: "~> 3.0.0"
+  rspec_version: "~> 2.99.0"
+
   matrix:
     - ruby_version: "193"
     - ruby_version: "200"
@@ -37,5 +41,5 @@ environment:
 
 matrix:
   allow_failures:
-    - RSPEC_VERSION='~> 2.99.0'
+    - rspec_version: '~> 2.99.0'
 
