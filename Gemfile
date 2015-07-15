@@ -50,7 +50,7 @@ else
   raise "rspec version #{rspec_version} is not supported"
 end
 
-
+gem 'tzinfo' # needed for Rails < 4.2.3.rc1 @see https://github.com/rails/rails/issues/13553
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data' # trying this for all platforms so it will run ok on Travis-CI
 # , platforms: [:mingw, :mswin, :x64_mingw] #, :jruby]
