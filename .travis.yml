@@ -27,6 +27,7 @@ env:
 # whitelist
 branches:
   only:
+    - wsd--example-app-working
     - 1-1-2--wsd-must-req-all-rspec-rails
     - master
 
