@@ -1,5 +1,5 @@
 # for Appveyor.com : continuous build and deployment server for Azure (Windows)
-version: '{build}'
+version: 1.1.3pre-'{build}'
 
 branches:
   only:
@@ -16,12 +16,11 @@ environment:
   - RSPEC_VERSION='~> 3.1.0'
   - RSPEC_VERSION='~> 3.0.0'
   - RSPEC_VERSION='~> 2.99.0'
-#  - RSPEC_VERSION='~> 2.14.0'
-
   matrix:
-    - ruby_version: '20'
     - ruby_version: '193'
+    - ruby_version: '20'
     - ruby_version: '21'
+    - ruby_version: '22'
 
 matrix:
   allow_failures:
