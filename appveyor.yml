@@ -1,0 +1,28 @@
+# for Appveyor.com : continuous build and deployment server for Azure (Windows)
+version: '{build}'
+branches:
+  only:
+  - wsd--example-app-working
+
+environment:
+  matrix:
+#    - ruby_version: '20'
+#    - ruby_version: '193'
+    - ruby_version: '21'
+
+install:
+  - SET PATH=C:\Ruby%ruby_version%\bin;%PATH%
+  - ruby --version
+  - gem --version
+  - gem install bundler
+  - bundler --version
+  - bundle install
+
+build: off
+# could be (for building a gem):
+#- rake build
+#- gem install --no-ri --no-rdoc pkg/<gem-name>-*.gem
+
+test_script:
+  - bundle exec rspec --backtrace
+# could be - bundle exec cucumber
