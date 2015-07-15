@@ -93,6 +93,7 @@ def gemspec_testfiles
   "test_files    = gem.files.grep(%r{^(test|spec|features)/})"
 end
 
+
 # make a string for a runtime dependency, suitable for putting into a gemspec file
 def gemspec_runtime_dependency(gemname, options='')
   "add_runtime_dependency    '#{gemname}'" << (options.empty? ? '' : ", '#{options}'")
@@ -116,6 +117,7 @@ def gemspec_sub_value(key='', val_wrapper=['', ''], new_value='', source)
 
 end
 
+
 def gemspec_substitue_new_info(gem_name, gemspec_source)
   new_source = gemspec_source
 
@@ -133,6 +135,7 @@ def gemspec_substitue_new_info(gem_name, gemspec_source)
 
   new_source
 end
+
 
 # let bundler create the gemspec.rb file, but we need to fix it up so it will run as expected with
 #  aruba and our tests
@@ -179,8 +182,8 @@ end
 
   loop_regexp = /Gem::Specification.new do \|(?<loop_var>\w*)\|(?<loop_body>.*)end/m
 
-  gem_loop_var = ( found = loop_regexp.match(new_source) ) ? found[:loop_var] : 'gem'
-  gemspec_config_loop_body = ( found = loop_regexp.match(new_source) ) ? found[:loop_body] : ''
+  gem_loop_var = (found = loop_regexp.match(new_source)) ? found[:loop_var] : 'gem'
+  gemspec_config_loop_body = (found = loop_regexp.match(new_source)) ? found[:loop_body] : ''
 
 
   # add rails to the runtime dependency  TODO or railties - make a separate method
@@ -223,8 +226,8 @@ def create_gem(gem_name)
     Bundler.clean_system 'bundle install'
   end
 
- # sh "cp '#{template_folder}/#{gem_name}.gemspec' tmp/#{gem_name}" # has to happen after bundle actions else can get clobbered
- # sh "cp '#{template_folder}/Rakefile' tmp/#{gem_name}"
+  # sh "cp '#{template_folder}/#{gem_name}.gemspec' tmp/#{gem_name}" # has to happen after bundle actions else can get clobbered
+  # sh "cp '#{template_folder}/Rakefile' tmp/#{gem_name}"
 end
 
 
@@ -281,7 +284,26 @@ Dir["#{File.dirname(__FILE__)}/support/**/*.rb"].each {|f| require f}
 
     cp_spec_support
 
+    puts TASK_SEPARATOR
+    puts " current files: (calling show_dir(Dir.getwd)) \n"
+    show_dir(Dir.getwd)
+
   end
+
+  # a temp method so we can see directory contents when running travis, etc.
+  require 'find'
+  def show_dir(root_dir)
+    Find.find(root_dir) do   |path|
+      if path =~ /\.git.*/
+        puts "  PRUNED #{path}"
+        Find.prune
+      end
+      puts path
+    end
+    puts TASK_SEPARATOR
+    puts "\n"
+  end
+
 
   desc "generate a fresh gem that depends on railties"
   task :railties_gem => :ensure_bundler_ok do |t|
