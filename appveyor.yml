@@ -95,13 +95,11 @@ matrix:
     - rspec_version: '~> 2.99.0'
 
 
-before_install:
+install:
   - echo *********************
   - echo Starting install...
   - echo RSPEC version is %rspec_version%.
   - echo Ruby version is %ruby_version%.
-
-install:
   - SET RSPEC_VERSION=%rspec_version%
   - SET PATH=C:\Ruby%ruby_version%\bin;C:\Ruby%ruby_version%\DevKit;C:\%PATH%
   - gem install bundler --version "~> 1.9.5" --no-rdoc --no-ri # cannot cache because ruby version changes
