@@ -45,7 +45,7 @@ def write_symlink(file_or_dir, source_foldername, filename=nil)
   source = example_app_path(file_or_dir)
   target = aruba_path(file_or_dir, source_foldername)
   target = File.join(File.dirname(target), filename) if filename
-  system "ln -s -f #{source} #{target}" # FIXME system ability to create symbolic links is not platform safe. (not implemented on all platforms)
+  system "ln -s -f #{source} #{target}" # FIXME system ability to create symbolic links is not platform safe. (not implemented on all platforms). Seems to be working fine on windows.
 end
 
 
