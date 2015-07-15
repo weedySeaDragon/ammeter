@@ -7,17 +7,17 @@ branches:
 environment:
   matrix:
     - ruby_version: "200-x64"
-      RSPECVERSION:  "~> 3.3.0"
+      #RSPECVERSION:  "~> 3.3.0"
     - ruby_version: "200-x64"
       RSPECVERSION:  "~> 3.2.0"
 
     - ruby_version: "21-x64"
-      RSPECVERSION:  "~> 3.0.0"
+      #RSPECVERSION:  "~> 3.0.0"
 
 
-matrix:
-  allow_failures:
-    - RSPECVERSION: '~> 2.99.0'
+#matrix:
+ # allow_failures:
+ #   - RSPECVERSION: '~> 2.99.0'
 
 
 install:
@@ -25,7 +25,7 @@ install:
   - echo Starting install...
   - echo RSPECVERSION is %RSPECVERSION%.
   - echo Ruby version is %ruby_version%.
-  - SET RSPEC_VERSION=%RSPECVERSION%
+  - SET RSPEC_VERSION='~> 3.0.0'
   - SET PATH=C:\Ruby%ruby_version%\bin;C:\Ruby%ruby_version%\DevKit;C:\%PATH%
   - SET RSPEC_VERSION
   - SET PATH
