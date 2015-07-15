@@ -67,7 +67,7 @@ Feature: generator spec
         end
       end
       """
-    When I run `rake spec`
+    When I run `rake spec spec/generators/awesome_generator_spec.rb`
     Then the output should contain "7 examples, 0 failures"
 
   Scenario: A spec that runs one task in the generator
@@ -92,7 +92,7 @@ Feature: generator spec
         end
       end
       """
-    When I run `rake spec`
+    When I run `rake spec spec/generators/another_awesome_generator_spec.rb`
     Then the output should contain "4 examples, 0 failures"
 
 
@@ -120,7 +120,7 @@ Feature: generator spec
         end
       end
       """
-    When I run `rake spec`
+    When I run `rake spec spec/generators/awesome_generator_spec.rb`
     Then the output should contain "5 examples, 5 failures"
      And the output should contain:
        """
@@ -164,7 +164,7 @@ Feature: generator spec
          end
        end
        """
-     When I run `rake spec`
+     When I run `rake spec spec/generators/awesome_generator_spec.rb`
      Then the output should contain "2 examples, 0 failures"
 
 
@@ -182,7 +182,7 @@ Feature: generator spec
         it { expect(subject).to contain 'class CreatePosts < ActiveRecord::Migration' }
       end
       """
-    When I run `rake spec`
+    When I run `rake spec spec/generators/a_migration_spec.rb`
     Then the output should contain "3 examples, 0 failures"
 
 
@@ -203,7 +203,7 @@ Feature: generator spec
         end
       end
       """
-    When I run `rake spec`
+    When I run `rake spec spec/generators/awesome_generator_spec.rb`
     Then the output should contain "2 examples, 0 failures"
 
 
