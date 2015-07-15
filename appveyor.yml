@@ -16,6 +16,8 @@ environment:
   - RSPEC_VERSION='~> 3.1.0'
   - RSPEC_VERSION='~> 3.0.0'
   - RSPEC_VERSION='~> 2.99.0'
+#  - RSPEC_VERSION='~> 2.14.0'
+
   matrix:
     - ruby_version: '193'
     - ruby_version: '20'
