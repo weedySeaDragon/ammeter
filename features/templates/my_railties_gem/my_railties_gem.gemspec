@@ -25,15 +25,15 @@ Gem::Specification.new do |gem|
   gem.bindir = "exe"
 
   gem.executables = gem.files.grep(%r{^bin/}).map { |f| File.basename(f) } # why not exe files? AE
-  # gem.executables = gem.files.grep(%r{^exe/}) { |f| File.basename(f) }
-
-  gem.test_files = gem.files.grep(%r{^(test|spec|features)/})
+  # gem.executables = gem.files.grep(%r{^exe/}) { |f| File.basename(  f) }
 
   gem.require_paths = ["lib"]
 
   gem.add_development_dependency "bundler", "~> 1.10"
   gem.add_development_dependency "rake", "~> 10.0"
   gem.add_development_dependency "rspec"
+
+  gem.test_files = gem.files.grep(%r{^(test|spec|features)/})
 
   gem.add_runtime_dependency 'railties', '>= 3.2'
 end
