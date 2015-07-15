@@ -28,6 +28,7 @@ env:
 branches:
   only:
     - 1-1-2--wsd-must-req-all-rspec-rails
+    - master
 
 bundler_args: "--retry=3 --jobs=3"
 
