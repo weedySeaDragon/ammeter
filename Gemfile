@@ -52,7 +52,8 @@ end
 
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
-gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
+gem 'tzinfo-data' # trying this for all platforms so it will run ok on Travis-CI
+# , platforms: [:mingw, :mswin, :x64_mingw] #, :jruby]
 
 gem "i18n", '< 0.7.0' if RUBY_VERSION < '1.9.3'
 
