@@ -1,0 +1,10 @@
+Feature: Newly created rails gem is A-OK
+
+  A rails gem that has just been created by the bundler should pass basic spec tests
+
+  @announce
+  @rail_gem
+  Scenario: A newly created gem passes all spec tests
+    Given the empty file named "test.tmp"
+    When I run `rake spec`
+    Then the output should contain "0 failures"

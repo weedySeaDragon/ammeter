@@ -205,6 +205,3 @@ Feature: generator spec
       """
     When I run `rake spec spec/generators/awesome_generator_spec.rb`
     Then the output should contain "2 examples, 0 failures"
-
-
-
