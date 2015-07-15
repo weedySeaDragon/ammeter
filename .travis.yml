@@ -3,6 +3,8 @@ language: ruby
 before_install:
   - gem install bundler --version '>=1.9.5'  #  so we can be sure to set code of conduct option= false to avoid an interactive prompt
   - bundle --version
+  - gem --version
+  - ruby --version
 
 rvm:
   - 2.2
@@ -11,7 +13,7 @@ rvm:
   - 1.9.3
   - jruby-18mode # JRuby in 1.8 mode
   - jruby-19mode # JRuby in 1.9 mode
-  - rbx-2.1.1
+  - rbx
 #  - 1.8.7
 #  - ruby-head
 
@@ -28,17 +30,19 @@ env:
 branches:
   only:
     - wsd--example-app-working
-    - 1-1-2--wsd-must-req-all-rspec-rails
-    - master
 
 bundler_args: "--retry=3 --jobs=3"
 
 script: "bundle exec rake ci --trace"
 
 matrix:
+  include:
+    - rvm: rbx-2.2.9
+      env: RBX_RUBY_COMPAT=2.1.0 RBX_VERSION=2.2.9
   allow_failures:
+    - RSPEC_VERSION='~> 2.99.0'
     - rvm: ruby-head
     - rvm: jruby-18mode
     - rvm: jruby-19mode
-
+    - rvm: rbx
 
